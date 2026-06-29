@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <svg width="400" height="250" viewBox="0 0 400 250" onload="init(evt)">
+
+      <script type="text/ecmascript"> 
+     
+      <![CDATA[
+
+        var slideChoice = -1;
+        var rgb = new Array(100,100,100);
+        var scaleChoice = 1
+        var scaleFactor = new Array(1.5, 2, 3);
+    
+        function init(evt) {
+          transformShirt();
+        }
+        
+        function setScale(n) { 
+          obj = document.getElementById("scale"+scaleChoice);
+          obj.setAttribute("fill","white");
+          scaleChoice = n;
+          obj = document.getElementById("scale"+scaleChoice);
+          obj.setAttribute("fill","#ffc");
+          transformShirt(); 
+        }
+    
+        function transformShirt(){
+          var obj=document.getElementById("shirt");
+          obj.setAttribute("transform","scale("+scaleFactor[scaleChoice]+")");
+          obj.setAttribute("stroke-width", 1/scaleFactor[scaleChoice]);
+          obj.setAttribute("stroke-width", 1/scaleFactor[scaleChoice]);
+        }
+
+         function startColorDrag(which) {
+          endColorDrag();
+          slideChoice=which;
+        }
+
+        function endColorDrag() {
+          slideChoice = -1;
+        }
+
+        function doColorDrag(evt, which) {
+          if(slideChoice < 0 || slideChoice != which) { 
+            return;
+          }
+        }
+
+        var obj = evt.getTarget();
+        var pos = evt.getClientY() = 10;
+
+        if(pos < 0) { pos=0;}
+        if(pos > 100) {pos =100;}
+        
+        obj = document.getElementById("slide"+slideChoice);
+        obj.setAttribute("y1", pos);
+        obj.setAtrrebute("y2", pos);
+        
+        var colorStr = ("rgb()"+ rgb);
+        obj = svgDocument = getElementById("shirt");
+        obj.setAttribute("fill", colorStr);  
+        ]]>
+    
+      </script>
+
+       <defs>
+         <path id="shirt" 
+         d="M -6 -30, -32 -19, -25.5 -13, -22 -14, -22 30, 23 30, 23 -14, 26.5 -13, 33 -19, 7 -30
+         A 6.5 6 0 0 1 -6 -30" 
+         fill="white" stroke="black"/>
+       </defs>
+
+       <use xlink:href="#shirt" x="150" y="150"/>
+
+    <g onmousedown="startColorDrag(0)" onmouseup="endColorDrag()" onmousemove="doColorDrag(evt,0)" transform="translate(230,10)">
+        <rect x="-10" y="-5" width="40" height="110" style="fill:white;"/>
+        <rect x="5" y="0" width="10" height="100" style="fill: red"/>
+        <line id="slide0" x1="0" y1="0" x2="20" y2="0" style="stroke: gray; stroke-width: 2;"/>
+    </g>
+
+</svg>
+</body>
+</html> 
